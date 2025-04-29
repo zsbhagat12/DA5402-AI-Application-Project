@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Error 404</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <style>
+        body {
+            font-size: large;
+            text-align: center;
+            background-color: #eff8ff;
+        }
+        .main {
+            background-color: #000;
+            color: #fff;
+            opacity: 0.85;
+            border-radius: 20px;
+            margin-top: 10%;
+            padding: 30px 20px 40px 20px;
+        }
+        .go-home {
+            color: white;
+            border-radius: 20px;
+            padding: 20px 20px 40px 20px;
+        }
+        .error-template h1 {
+            font-size: 3rem;
+        }
+        .error-template h2 {
+            font-size: 2rem;
+        }
+        .error-actions .btn {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container col-lg-4 main">
+        <div class="row">
+            <div class="col-12">
+                <div class="error-template">
+                    <h1>Oops!</h1>
+                    <h2>404 Not Found</h2>
+                    <div class="error-details">
+                        ERROR: {{ error }}
+                    </div>
+                    <div class="error-actions go-home">
+                        <a href="/" class="btn btn-primary btn-lg">
+                            <i class="fas fa-home"></i> Back To Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <!-- FontAwesome for icons (optional) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" defer></script>
+</body>
+</html>

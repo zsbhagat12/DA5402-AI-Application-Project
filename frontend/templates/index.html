@@ -104,10 +104,11 @@
                         <div class="display-3 fw-bold text-success mb-3">{{ response }}</div>
                         <div class="progress mb-3" style="height: 30px;">
                             <div class="progress-bar bg-success" role="progressbar"
-                                 style="width: {{ response * 10 }}%"
-                                 aria-valuenow="{{ response }}"
-                                 aria-valuemin="0" aria-valuemax="10">
+                                style="width: {{ (response|default(0, true)) * 10 }}%"
+                                aria-valuenow="{{ response|default(0, true) }}"
+                                aria-valuemin="0" aria-valuemax="10">
                             </div>
+
                         </div>
                         <div>Quality Scale: <span class="fw-bold">0 (Poor)</span> – <span class="fw-bold">10 (Excellent)</span></div>
                     {% else %}
