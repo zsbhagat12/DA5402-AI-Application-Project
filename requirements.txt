@@ -1,0 +1,12 @@
+tensorflow
+scikit-learn
+pandas
+numpy
+joblib
+Flask
+gunicorn
+requests
+matplotlib
+# scipy
+flask-swagger-ui
+flask-cors

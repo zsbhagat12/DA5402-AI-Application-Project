@@ -10,7 +10,8 @@ from pathlib import Path
 def train_and_save_model():
     # Load dataset
     data_path = Path(__file__).parent.parent / 'data/winequality-white.csv'
-    df = pd.read_csv(data_path)
+    df = pd.read_csv(data_path, sep=';')
+    # print(df.head(5))  # Debugging line to check the data
     
     # Preprocessing
     X = df.drop('quality', axis=1)
@@ -18,7 +19,8 @@ def train_and_save_model():
     
     # Split data
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    
+    # print(X_train.shape, X_test.shape)  # Debugging line to check the shapes
+    # print(y_train.shape, y_test.shape)  # Debugging line to check the shapes
     # Scale features
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
