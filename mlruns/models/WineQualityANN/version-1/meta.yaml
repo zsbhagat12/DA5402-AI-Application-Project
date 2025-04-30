@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1745990594047
+current_stage: None
+description: null
+last_updated_timestamp: 1745990594047
+name: WineQualityANN
+run_id: 5cd5e8cb667249d7ac4fdf4c9d877050
+run_link: null
+source: file:///D:/Jamie/IIT%20Madras/Semester%20II_1st%20Year_2024-25/DA5402%20Machine%20Learning%20Operations%20Lab/AI%20App%20Project/Github/mlruns/410207660008391725/5cd5e8cb667249d7ac4fdf4c9d877050/artifacts/model
+status: READY
+status_message: null
+storage_location: file:///D:/Jamie/IIT%20Madras/Semester%20II_1st%20Year_2024-25/DA5402%20Machine%20Learning%20Operations%20Lab/AI%20App%20Project/Github/mlruns/410207660008391725/5cd5e8cb667249d7ac4fdf4c9d877050/artifacts/model
+user_id: null
+version: 1

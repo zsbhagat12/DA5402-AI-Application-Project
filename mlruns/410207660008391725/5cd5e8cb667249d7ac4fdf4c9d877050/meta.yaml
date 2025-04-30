@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/Jamie/IIT%20Madras/Semester%20II_1st%20Year_2024-25/DA5402%20Machine%20Learning%20Operations%20Lab/AI%20App%20Project/Github/mlruns/410207660008391725/5cd5e8cb667249d7ac4fdf4c9d877050/artifacts
+end_time: 1745990594088
+entry_point_name: ''
+experiment_id: '410207660008391725'
+lifecycle_stage: active
+run_id: 5cd5e8cb667249d7ac4fdf4c9d877050
+run_name: loud-sloth-518
+run_uuid: 5cd5e8cb667249d7ac4fdf4c9d877050
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1745990542777
+status: 3
+tags: []
+user_id: zeesh

@@ -10,3 +10,4 @@ matplotlib
 # scipy
 flask-swagger-ui
 flask-cors
+mlflow

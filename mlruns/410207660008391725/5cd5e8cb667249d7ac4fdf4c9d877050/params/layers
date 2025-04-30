@@ -1,0 +1,1 @@
+[{'units': 64, 'activation': 'relu'}, {'units': 32, 'activation': 'relu'}, {'units': 1}]

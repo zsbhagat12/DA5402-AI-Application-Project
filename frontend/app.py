@@ -1,10 +1,13 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import requests
+# jsonify
+
 
 app = Flask(__name__)
 
 # URL of the model server's predict endpoint
 MODEL_SERVER_URL = "http://localhost:5001/predict"  # Change if hosted elsewhere
+MODEL_SERVER_RETRAIN_URL = "http://localhost:5001/retrain"
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -46,5 +49,19 @@ def index():
 
     return render_template("index.html")
 
+@app.route("/retrain", methods=["POST"])
+def retrain():
+    try:
+        response = requests.post(MODEL_SERVER_RETRAIN_URL, timeout=120)
+        return jsonify({
+            "status": "success" if response.ok else "error",
+            "message": response.json().get("message", "Retraining completed")
+        }), response.status_code
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
+    
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)

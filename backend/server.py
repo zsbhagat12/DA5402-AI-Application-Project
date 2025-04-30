@@ -6,6 +6,8 @@ import argparse
 from pathlib import Path
 from flask_swagger_ui import get_swaggerui_blueprint
 from flask_cors import CORS
+import sys
+from tensorflow.keras import losses
 
 app = Flask(__name__)
 CORS(app)  # Add this line
@@ -15,6 +17,7 @@ scaler = None
 
 SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI
 API_URL = '/static/swagger.json'  # Path to your Swagger spec
+PROJECT_ROOT = Path(__file__).parent.parent
 
 swaggerui_blueprint = get_swaggerui_blueprint(
     SWAGGER_URL,
@@ -26,24 +29,39 @@ app.register_blueprint(swaggerui_blueprint)
 
 def load_or_train_model(force_retrain=False):
     global model, scaler
-    model_path = Path(__file__).parent.parent / 'model/wine_quality_ann.h5'
-    scaler_path = Path(__file__).parent.parent / 'model/scaler.pkl'
-
+    model_path = PROJECT_ROOT / 'model/wine_quality_ann.keras'
+    scaler_path = PROJECT_ROOT / 'model/scaler.pkl'
+    print(f"Model path: {model_path}")
+    print(f"Scaler path: {scaler_path}")
     if force_retrain:
         print("Force retraining requested...")
+        if str(PROJECT_ROOT/ 'model') not in sys.path:
+            sys.path.append(str(PROJECT_ROOT/ 'model'))
+        print(sys.path)
         import train
         train.train_and_save_model()
 
     try:
-        model = load_model(model_path)
+        model = load_model(
+            model_path,
+            compile=True,
+            custom_objects={'MeanSquaredError': losses.MeanSquaredError}
+        )
         scaler = joblib.load(scaler_path)
         print("Model and scaler loaded successfully")
     except Exception as e:
         print(f"Error loading model: {e}")
         if not force_retrain:  # Prevent infinite loop
+            if str(PROJECT_ROOT/ 'model') not in sys.path:
+                sys.path.append(str(PROJECT_ROOT/ 'model'))
+            # print(sys.path)
             import train
             train.train_and_save_model()
-            model = load_model(model_path)
+            model = load_model(
+                model_path,
+                compile=True,
+                custom_objects={'MeanSquaredError': losses.MeanSquaredError}
+            )
             scaler = joblib.load(scaler_path)
         else:
             raise RuntimeError("Failed to load model after forced retraining") from e
@@ -76,6 +94,21 @@ def predict():
         })
     except Exception as e:
         return jsonify({'error': str(e), 'status': 'error'}), 400
+    
+@app.route('/retrain', methods=['POST'])
+def trigger_retraining():
+    try:
+        print("Retraining triggered...")
+        load_or_train_model(force_retrain=True)
+        return jsonify({
+            "status": "success",
+            "message": "Model retrained successfully"
+        })
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -87,4 +120,4 @@ if __name__ == "__main__":
     
     load_or_train_model(force_retrain=args.retrain)
     
-    app.run(host=args.host, port=args.port, debug=False)
+    app.run(host=args.host, port=args.port, debug=True)
