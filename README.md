@@ -50,3 +50,17 @@ Code Structure
 └── docker-compose.yml           # (included to launch full stack)
 
 ```
+
+
+Pipeline Flow
+
+```mermaid
+flowchart TD
+        node1["data\raw\winequality-white.csv.dvc"]
+        node2["preprocess"]
+        node3["train"]
+        node1-->node2
+        node2-->node3
+```
+
+

@@ -20,12 +20,12 @@ logger = setup_logger('train', 'train.log')
 PROJECT_ROOT = Path(__file__).parent.parent
 
 def train_and_save_model():
-    # Initialize MLflow experiment
+    # Initialize MLflow experimentdvc d
     mlflow.set_experiment("Wine_Quality_Prediction")
     mlflow.keras.autolog()
     
     # Load dataset
-    data_path = PROJECT_ROOT / 'data/preprocessed/winequality-white_processed.csv'
+    data_path = PROJECT_ROOT / 'data/processed/winequality-white_processed.csv'
     df = pd.read_csv(data_path, sep=';')
     logger.info(f"Loaded dataset from {data_path}")
     

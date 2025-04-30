@@ -12,3 +12,6 @@ flask-swagger-ui
 flask-cors
 mlflow
 dvc
+# prometheus
+prometheus_flask_exporter
+psutil
