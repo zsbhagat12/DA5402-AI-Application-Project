@@ -1,7 +1,14 @@
 from flask import Flask, render_template, request, jsonify
 import requests
-# jsonify
+import sys
+from pathlib import Path
 
+# Add the logs directory to sys.path
+if str(Path(__file__).parent.parent / 'logs') not in sys.path:
+    sys.path.append(str(Path(__file__).parent.parent / "logs"))
+from logging_utils import setup_logger
+
+logger = setup_logger('app', 'app.log')
 
 app = Flask(__name__)
 
@@ -40,8 +47,10 @@ def index():
                 if result.get("status") == "success":
                     return render_template("index.html", response=result["prediction"])
                 else:
+                    
                     return render_template("404.html", error=result.get("error", "Unknown error"))
             else:
+                logger.error(f"Model server error: {response.text}")
                 return render_template("404.html", error=f"Model server error: {response.text}")
 
         except Exception as e:
@@ -58,10 +67,12 @@ def retrain():
             "message": response.json().get("message", "Retraining completed")
         }), response.status_code
     except Exception as e:
+        logger.error(f"Error during retraining: {e}")
         return jsonify({
             "status": "error",
             "message": str(e)
         }), 500
     
 if __name__ == "__main__":
+    logger.info("App started")
     app.run(host='0.0.0.0', port=5000, debug=True)

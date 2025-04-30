@@ -4,27 +4,49 @@ Code Structure
 
 ```
 .
+.
 ├── backend/
 │   ├── static/
-│   │   └── swagger.json         # OpenAPI/Swagger specification for API docs
-│   └── server.py                # Model inference API server (Flask, Swagger UI)
+│   │   └── swagger.json
+│   ├── server.py                 # Model inference API server
+│   └── Dockerfile                
 ├── data/
-│   ├── winequality-red.csv      # Red wine dataset
-│   ├── winequality-white.csv    # White wine dataset
-│   └── winequality.names        # Dataset feature descriptions
+│   ├── winequality-red.csv
+│   ├── winequality-white.csv
+│   └── winequality.names
 ├── frontend/
 │   ├── static/
-│   │   ├── css/                 # Custom CSS for frontend
-│   │   └── script/              # Custom JS for frontend
+│   │   ├── css/
+│   │   └── script/
 │   ├── templates/
-│   │   ├── 404.html             # Error page template
-│   │   └── index.html           # Main UI template for wine quality prediction
-│   └── app.py                   # Frontend Flask app (user interface, form handling)
+│   │   ├── 404.html
+│   │   └── index.html
+│   ├── app.py                   # User-facing frontend Flask app
+│   └── Dockerfile                   
+├── grafana/
+│   ├── dashboards/
+│   │   └── wine_dashboard.json  # Exported dashboard
+│   ├── provisioning/
+│   │   ├── dashboards/
+│   │   │   └── dashboard.yml    # Load custom dashboards
+│   │   └── datasources/
+│   │       └── datasource.yml   # Prometheus data source config
+├── logs/
+│   ├── logs/
+│   │   ├── app.log
+│   │   └── server.log
+│   └── logging_utils.py         # Custom logging formatter
+├── mlruns/                      # MLflow experiment tracking
 ├── model/
-│   ├── scaler.pkl               # Saved StandardScaler for feature normalization
-│   ├── train.py                 # Model training script (ANN)
-│   └── wine_quality_ann.h5      # Trained ANN model file
-├── README.md                    # Project documentation
-├── requirements.txt             # Python dependencies
-└── 
+│   ├── scaler.pkl
+│   ├── train.py
+│   ├── wine_quality_ann.h5      # (existing)
+│   └── wine_quality_ann.keras   # (optional Keras format)
+├── prometheus/
+│   └── prometheus.yml           # Prometheus configuration
+├── requirements.txt             # All libraries present here to be installed beforehand
+├── README.md                    # This file
+├── dvc.yaml                     # DVC Pipeline
+└── docker-compose.yml           # (included to launch full stack)
+
 ```

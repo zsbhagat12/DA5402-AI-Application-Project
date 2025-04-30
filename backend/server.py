@@ -8,6 +8,12 @@ from flask_swagger_ui import get_swaggerui_blueprint
 from flask_cors import CORS
 import sys
 from tensorflow.keras import losses
+# Add the logs directory to sys.path
+if str(Path(__file__).parent.parent / 'logs') not in sys.path:
+    sys.path.append(str(Path(__file__).parent.parent / "logs"))
+
+from logging_utils import setup_logger
+logger = setup_logger('server', 'server.log')
 
 app = Flask(__name__)
 CORS(app)  # Add this line
@@ -26,6 +32,7 @@ swaggerui_blueprint = get_swaggerui_blueprint(
 )
 
 app.register_blueprint(swaggerui_blueprint)
+app.logger.handlers = logger.handlers
 
 def load_or_train_model(force_retrain=False):
     global model, scaler
@@ -33,11 +40,14 @@ def load_or_train_model(force_retrain=False):
     scaler_path = PROJECT_ROOT / 'model/scaler.pkl'
     print(f"Model path: {model_path}")
     print(f"Scaler path: {scaler_path}")
+    logger.info(f"Model path: {model_path}")
+    logger.info(f"Scaler path: {scaler_path}")
     if force_retrain:
         print("Force retraining requested...")
+        logger.warning("Force retraining requested...")
         if str(PROJECT_ROOT/ 'model') not in sys.path:
             sys.path.append(str(PROJECT_ROOT/ 'model'))
-        print(sys.path)
+        # print(sys.path)
         import train
         train.train_and_save_model()
 
@@ -49,8 +59,10 @@ def load_or_train_model(force_retrain=False):
         )
         scaler = joblib.load(scaler_path)
         print("Model and scaler loaded successfully")
+        logger.info("Model and scaler loaded successfully")
     except Exception as e:
         print(f"Error loading model: {e}")
+        logger.error(f"Error loading model: {e}")
         if not force_retrain:  # Prevent infinite loop
             if str(PROJECT_ROOT/ 'model') not in sys.path:
                 sys.path.append(str(PROJECT_ROOT/ 'model'))

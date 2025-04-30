@@ -10,7 +10,13 @@ from pathlib import Path
 import mlflow
 import mlflow.keras
 from tensorflow.keras import losses
+import sys
 
+if str(Path(__file__).parent.parent / 'logs') not in sys.path:
+    sys.path.append(str(Path(__file__).parent.parent / "logs"))
+from logging_utils import setup_logger
+
+logger = setup_logger('train', 'train.log')
 PROJECT_ROOT = Path(__file__).parent.parent
 
 def train_and_save_model():
@@ -19,8 +25,9 @@ def train_and_save_model():
     mlflow.keras.autolog()
     
     # Load dataset
-    data_path = PROJECT_ROOT / 'data/winequality-white.csv'
+    data_path = PROJECT_ROOT / 'data/preprocessed/winequality-white_processed.csv'
     df = pd.read_csv(data_path, sep=';')
+    logger.info(f"Loaded dataset from {data_path}")
     
     # Preprocessing
     X = df.drop('quality', axis=1)
@@ -99,7 +106,8 @@ def train_and_save_model():
         
         joblib.dump(scaler, scaler_path)
         model.save(model_path)
-        
+        logger.info(f"Model and scaler saved to {model_dir}")
+
         # Log artifacts to MLflow
         mlflow.log_artifact(str(scaler_path))
         mlflow.keras.log_model(
@@ -110,4 +118,7 @@ def train_and_save_model():
         )
 
 if __name__ == "__main__":
-    train_and_save_model()
+    try:    
+        train_and_save_model()
+    except Exception as e:
+        logger.error(f"Training failed: {e}")

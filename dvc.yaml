@@ -1,0 +1,16 @@
+stages:
+  preprocess:
+    cmd: python model/preprocess.py
+    deps:
+      - data/winequality-white.csv
+      - model/preprocess.py
+    outs:
+      - data/processed/winequality_processed.csv
+  train:
+    cmd: python model/train.py
+    deps:
+      - data/processed/winequality_processed.csv
+      - model/train.py
+    outs:
+      - model/wine_quality_ann.keras
+      - model/scaler.pkl

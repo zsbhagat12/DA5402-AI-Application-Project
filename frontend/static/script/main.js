@@ -1,3 +1,6 @@
+const OVERRIDE_LABEL_TEXT = "Any Value";
+
+
 document.addEventListener('DOMContentLoaded', function() {
     // --- Validation (existing) ---
     document.querySelector('form').addEventListener('submit', function(e) {
@@ -37,56 +40,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     Object.keys(limits).forEach(field => {
         const input = document.getElementById(field);
-        if (!input) return;
-        // Create override checkbox
-        const wrapper = document.createElement('div');
-        wrapper.className = "form-check mt-1";
-        wrapper.innerHTML = `
-            <input class="form-check-input" type="checkbox" id="${field}_override">
-            <label class="form-check-label small" for="${field}_override">
-                Allow any value
-            </label>
-        `;
-        input.parentNode.appendChild(wrapper);
-
-        // Checkbox logic
-        const checkbox = document.getElementById(`${field}_override`);
-        checkbox.addEventListener('change', function() {
-            if (this.checked) {
-                input.removeAttribute('min');
-                input.removeAttribute('max');
-            } else {
-                input.setAttribute('min', limits[field][0]);
-                input.setAttribute('max', limits[field][1]);
-            }
-        });
-    });
-
-    // --- Rebuild Model Button ---
-    // Add button below form
-    const form = document.getElementById('wineForm');
-    const rebuildDiv = document.createElement('div');
-    rebuildDiv.className = "text-center mt-4";
-    rebuildDiv.innerHTML = `
-        <button type="button" class="btn btn-warning" id="rebuildModelBtn">
-            <i class="fas fa-sync"></i> Rebuild Model
-        </button>
-        <div id="retrain-status" class="mt-2 small"></div>
-    `;
-    form.parentNode.appendChild(rebuildDiv);
-
-    document.getElementById('rebuildModelBtn').addEventListener('click', async function() {
-        const status = document.getElementById('retrain-status');
-        status.textContent = "Retraining model...";
-        status.className = 'text-info mt-2 small';
-        try {
-            const response = await fetch('/retrain', { method: 'POST' });
-            const result = await response.json();
-            status.textContent = result.message;
-            status.className = response.ok ? 'text-success mt-2 small' : 'text-danger mt-2 small';
-        } catch (error) {
-            status.textContent = "Error: " + error.message;
-            status.className = 'text-danger mt-2 small';
+        const checkbox = document.getElementById(field + '_override');
+        if (input && checkbox) {
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    input.removeAttribute('min');
+                    input.removeAttribute('max');
+                } else {
+                    input.setAttribute('min', limits[field][0]);
+                    input.setAttribute('max', limits[field][1]);
+                }
+            });
         }
     });
+});
+
+document.querySelectorAll('.form-check-label').forEach(label => {
+    label.textContent = OVERRIDE_LABEL_TEXT;
 });

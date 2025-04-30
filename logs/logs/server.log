@@ -1,0 +1,11 @@
+[2025-04-30 11:55:47,675] INFO in server: Model path: D:\Jamie\IIT Madras\Semester II_1st Year_2024-25\DA5402 Machine Learning Operations Lab\AI App Project\Github\model\wine_quality_ann.keras
+[2025-04-30 11:55:47,675] INFO in server: Scaler path: D:\Jamie\IIT Madras\Semester II_1st Year_2024-25\DA5402 Machine Learning Operations Lab\AI App Project\Github\model\scaler.pkl
+[2025-04-30 11:56:34,611] INFO in server: Model path: D:\Jamie\IIT Madras\Semester II_1st Year_2024-25\DA5402 Machine Learning Operations Lab\AI App Project\Github\model\wine_quality_ann.keras
+[2025-04-30 11:56:34,611] INFO in server: Scaler path: D:\Jamie\IIT Madras\Semester II_1st Year_2024-25\DA5402 Machine Learning Operations Lab\AI App Project\Github\model\scaler.pkl
+[2025-04-30 11:56:34,785] INFO in server: Model and scaler loaded successfully
+[2025-04-30 11:56:59,925] INFO in server: Model path: D:\Jamie\IIT Madras\Semester II_1st Year_2024-25\DA5402 Machine Learning Operations Lab\AI App Project\Github\model\wine_quality_ann.keras
+[2025-04-30 11:56:59,926] INFO in server: Scaler path: D:\Jamie\IIT Madras\Semester II_1st Year_2024-25\DA5402 Machine Learning Operations Lab\AI App Project\Github\model\scaler.pkl
+[2025-04-30 11:57:00,099] INFO in server: Model and scaler loaded successfully
+[2025-04-30 12:00:46,106] INFO in server: Model path: D:\Jamie\IIT Madras\Semester II_1st Year_2024-25\DA5402 Machine Learning Operations Lab\AI App Project\Github\model\wine_quality_ann.keras
+[2025-04-30 12:00:46,106] INFO in server: Scaler path: D:\Jamie\IIT Madras\Semester II_1st Year_2024-25\DA5402 Machine Learning Operations Lab\AI App Project\Github\model\scaler.pkl
+[2025-04-30 12:00:46,281] INFO in server: Model and scaler loaded successfully

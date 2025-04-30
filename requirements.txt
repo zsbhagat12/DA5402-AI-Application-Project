@@ -11,3 +11,4 @@ matplotlib
 flask-swagger-ui
 flask-cors
 mlflow
+dvc
